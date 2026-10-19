@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha de desempeño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+:root{color-scheme:light dark;--bg:#f2f5f7;--panel:#fff;--ink:#14202b;--mute:#586875;--line:#dfe6eb;--field:#fff;--pri:#0b6e8a;--pri-ink:#fff;--pri-d:#0e3a4b;--soft:#e3f1f5;--track:#e7edf1;--bad:#b3261e;--ok:#127a43;--ease:cubic-bezier(.23,1,.32,1);--r-panel:16px;--r-ctl:10px;--sh:0 1px 2px rgba(20,32,43,.05),0 8px 24px rgba(20,32,43,.05)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e161c;--panel:#15202a;--ink:#e7eef3;--mute:#93a4b1;--line:#243340;--field:#101a22;--pri:#47b4d1;--pri-ink:#06222c;--pri-d:#9fd8e8;--soft:#173440;--track:#223039;--bad:#ff8a80;--ok:#6fd49b;--sh:none}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+h1{font-size:26px;letter-spacing:-.02em;line-height:1.15;margin:0;font-weight:800}
+h2{font-size:17px;letter-spacing:-.01em;margin:0;font-weight:700}
+h3{font-size:14px;margin:0;font-weight:700}
+small,.mute{color:var(--mute)}small{font-size:13px}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--pri) 55%,transparent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 16px 90px}
+.top{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;gap:14px;align-items:center}
+.mark{display:inline-flex;gap:3px;align-items:flex-end;height:28px}
+.mark b{width:6px;border-radius:2px;display:block}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--panel);padding:9px 14px;border-radius:var(--r-ctl);cursor:pointer;font-weight:600;white-space:nowrap;transition:transform 160ms var(--ease),background-color 160ms ease,border-color 160ms ease}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.btn:hover{border-color:color-mix(in srgb,var(--pri) 45%,var(--line));background:color-mix(in srgb,var(--pri) 5%,var(--panel))}.btn.pri:hover{background:color-mix(in srgb,var(--pri) 88%,#000);border-color:transparent}}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--pri)}
+.btn.sm{padding:6px 10px;font-size:14px}
+.btn.danger{color:var(--bad)}
+.i{font-size:18px;line-height:1}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-panel);padding:20px;box-shadow:var(--sh)}
+.fields{display:grid;grid-template-columns:1.4fr 1.3fr 1.2fr 1.2fr .9fr;gap:12px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f>label,.lab{font-size:13px;font-weight:600;color:var(--mute)}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;min-width:0;border:1px solid var(--line);background:var(--field);border-radius:var(--r-ctl);padding:9px 11px;transition:border-color 160ms ease}
+input[type=date]{-webkit-appearance:none;appearance:none;min-height:42px}
+textarea{min-height:104px;resize:vertical;line-height:1.45}
+.pp{display:grid;grid-template-columns:1fr 88px;gap:6px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start;margin-top:18px}
+.side{position:sticky;top:16px;display:flex;flex-direction:column;gap:16px}
+.bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 4px}
+.bh+.arw{border-top:0}
+.blk+.blk{margin-top:22px}
+.arw{border-top:1px solid var(--line)}
+.arow{display:grid;grid-template-columns:minmax(140px,1fr) minmax(190px,1.15fr) 118px 28px;gap:14px;align-items:center;padding:11px 0}
+.nb{display:inline-flex;gap:8px;align-items:center;border:0;background:transparent;padding:3px 8px 3px 0;margin:-3px 0;border-radius:8px;cursor:pointer;text-align:left;font-weight:500;line-height:1.3;max-width:100%;transition:transform 160ms var(--ease),background-color 160ms ease}
+.nb:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.nb:hover{background:var(--soft)}}
+.nb .ci{flex:none;color:var(--mute);font-size:17px;transition:color 160ms ease}
+.nb.has .ci,.nb[aria-expanded=true] .ci{color:var(--pri)}
+.cm{margin-bottom:0}
+.ah{display:block;padding:0 0 8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;width:100%}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:4px 11px;font-size:13px;cursor:pointer;transition:transform 160ms var(--ease),background-color 160ms ease}
+.chip:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.chip:hover{background:var(--soft)}}
+.add{flex-wrap:wrap}
+.cmpg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.cs{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.cs small{display:block}
+.cs .n{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.cs .n s{font-size:14px;font-weight:600;color:var(--mute);text-decoration:none;margin-left:2px}
+.cs .dl{margin-top:6px}
+.dl{display:inline-flex;gap:4px;border-radius:8px;padding:1px 9px;font-size:13px;font-weight:700;white-space:nowrap;line-height:1.5}
+.dl.up{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.dl.down{background:color-mix(in srgb,var(--bad) 13%,transparent);color:var(--bad)}
+.dl.eq{background:var(--track);color:var(--mute)}
+.verd{margin:12px 0 0;font-weight:600}
+.cl{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:8px}
+.cr{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.cr .pv{color:var(--mute);white-space:nowrap}
+.ch{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.ch select{width:auto;padding:6px 10px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cmg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:2px 0 16px}
+.cmg textarea{min-height:104px}
+.rs{border-left:4px solid var(--c,var(--line));padding:2px 0 2px 14px;margin-top:16px}
+.rs:first-child{margin-top:12px}
+.rs .rh{display:flex;gap:10px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.rs .rc{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:6px}
+.rs .rc small{font-weight:600}
+.rs p{margin:2px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;text-align:justify;hyphens:auto}
+.rs p.none{color:var(--mute);text-align:left}
+.sub2{margin-top:22px}
+.arow .nm{min-width:0;line-height:1.3}
+.arow .nm small{display:block}
+.vl{text-align:right;line-height:1.2}
+.vl b{display:block;font-size:17px}
+.vl small{font-size:12.5px}
+.rm{border:0;background:transparent;color:var(--mute);width:28px;height:28px;border-radius:8px;cursor:pointer;opacity:0;transition:opacity 160ms ease,background-color 160ms ease}
+.arow:hover .rm,.rm:focus-visible,.item:hover .rm{opacity:1}
+@media (hover:none){.rm{opacity:1}}
+.rm:hover{background:var(--track)}
+.band{position:relative;height:16px;border-radius:8px;background:var(--track);cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+.band::before{content:"";position:absolute;inset:-12px 0}
+.band .fill{position:absolute;inset:0;border-radius:8px;transition:clip-path 220ms var(--ease),background-color 160ms ease}
+.band.drag .fill{transition:none}
+.band .st{position:absolute;top:3px;bottom:3px;width:2px;margin-left:-1px;background:var(--panel);opacity:.8;border-radius:1px}
+.band[data-ro] {cursor:default}
+.add{display:flex;gap:8px;margin-top:12px}
+.add input{flex:1}
+.hint{font-size:13.5px;color:var(--mute);margin-top:2px}
+.score{display:flex;gap:16px;align-items:center}
+.score .big{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.badge{display:inline-flex;border-radius:8px;padding:2px 10px;font-size:13px;font-weight:700}
+.tones{display:inline-flex;gap:3px;align-items:flex-end;margin-top:8px}
+.tone{width:20px;height:9px;border-radius:3px;opacity:.35;transition:opacity 160ms ease,height 160ms var(--ease)}
+.tone.on{opacity:1;height:15px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.two .sub{border-top:1px solid var(--line);padding-top:10px}
+.item{display:flex;gap:4px;align-items:center;margin-top:6px}
+.item input{flex:1;padding:7px 10px}
+.item .rm{opacity:.0}
+.empty{font-size:13.5px;color:var(--mute);padding:6px 0}
+.sw{display:flex;gap:14px;align-items:center;cursor:pointer;border:0;background:transparent;padding:0;text-align:left;width:100%}
+.sw .tr{width:48px;height:28px;border-radius:99px;background:color-mix(in srgb,var(--mute) 40%,var(--track));position:relative;transition:background-color 200ms ease;flex:none}
+.sw .tr::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform 220ms var(--ease)}
+.sw[aria-checked=true] .tr{background:var(--pri)}
+.sw[aria-checked=true] .tr::after{transform:translateX(20px)}
+.sw:active .tr::after{width:26px}
+.reveal{display:grid;grid-template-rows:0fr;transition:grid-template-rows 240ms var(--ease)}
+.reveal.open{grid-template-rows:1fr}
+.reveal>div{overflow:hidden;min-height:0}
+.reveal:not(.open)>div{visibility:hidden}
+.gcard{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px;display:grid;gap:12px}
+.gg{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:10px}
+.gav{display:grid;grid-template-columns:minmax(0,1fr) 70px 28px;gap:12px;align-items:center}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+dialog{border:0;border-radius:var(--r-panel);padding:0;width:calc(100vw - 24px);max-width:560px;background:var(--panel);color:var(--ink);box-shadow:0 30px 80px rgba(8,20,28,.35)}
+dialog::backdrop{background:rgba(8,20,28,.5)}
+dialog[open]{animation:dlg 200ms var(--ease)}
+@keyframes dlg{from{opacity:0;transform:scale(.96)}}
+.dlg{padding:22px;max-height:84vh;overflow:auto}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.hrow{display:flex;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.hrow .t{flex:1;min-width:0}
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,16px);background:var(--pri-d);color:#fff;padding:10px 16px;border-radius:var(--r-ctl);opacity:0;transition:opacity 200ms ease,transform 220ms var(--ease);pointer-events:none;font-weight:600;max-width:calc(100vw - 32px)}
+@media (prefers-color-scheme:dark){.toast{color:#06222c}}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.status{font-size:13px;color:var(--mute)}
+.link{border:0;background:transparent;color:var(--pri);font-weight:600;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px}
+.notice{font-size:13.5px;border-radius:10px;padding:9px 12px;background:var(--soft);margin-top:10px}
+#printarea{display:none}
+@media (max-width:980px){
+ .fields{grid-template-columns:1fr 1fr}
+ .main{grid-template-columns:1fr}
+ .side{position:static}
+ .cols2{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+ h1{font-size:23px}
+ .arow{grid-template-columns:minmax(0,1fr) auto 28px;gap:8px 10px;padding:12px 0}
+ .arow .band{grid-column:1/-1;grid-row:2;margin:4px 0 2px}
+ .arow .rm{grid-row:1;grid-column:3}
+ .gg,.cmg,.rs .rc,.cmpg,.cl{grid-template-columns:1fr}
+ .two{grid-template-columns:1fr}
+ .fields{grid-template-columns:1fr}
+ .acts .btn{padding:8px 11px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+/* ---------- impresión ---------- */
+@page{size:A4;margin:13mm 13mm 16mm;@bottom-right{content:"Página " counter(page) " de " counter(pages);font:9px Figtree,Arial,sans-serif;color:#586875}}
+@media print{
+ :root{color-scheme:light}
+ body{background:#fff}
+ body.printing #app,body.printing .toast,body.printing dialog{display:none!important}
+ body.printing #printarea{display:block}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.pr{font:11px/1.45 "Figtree",Arial,sans-serif;color:#14202b}
+.pr h1{font-size:22px;margin:0}
+.pr h2{font-size:12.5px;margin:12px 0 5px;padding-bottom:4px;border-bottom:1.5px solid #14202b}
+.pr .ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:3px solid #0e3a4b;padding-bottom:10px}
+.pr .pm{display:inline-flex;gap:2px;align-items:flex-end;height:20px;margin-bottom:6px}.pr .pm b{width:5px;border-radius:1px}
+.pr .pg{display:grid;grid-template-columns:1.4fr 1.2fr 1.2fr 1fr;gap:10px;margin-top:12px}
+.pr .pg small{display:block;color:#586875;font-size:9.5px}
+.pr .res{display:flex;gap:22px;align-items:center;margin-top:14px;padding:12px 14px;border:1px solid #cfd8de;border-radius:10px;break-inside:avoid}
+.pr .res .n{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.pr .bd{display:inline-block;border-radius:6px;padding:1px 9px;font-weight:700;font-size:11px}
+.pr table{width:100%;border-collapse:collapse}
+.pr td{padding:3px 6px;border-bottom:1px solid #e1e7ec;vertical-align:middle}
+.pr td.w{width:34px;color:#586875}.pr td.b{width:34%}.pr td.v{width:70px;text-align:right;font-weight:700}
+.pr .pbar{display:block;height:8px;border-radius:4px;background:#e7edf1;overflow:hidden}.pr .pbar i{display:block;height:100%}
+.pr .c2{display:grid;grid-template-columns:1fr 1fr;gap:16px;break-inside:avoid}
+.pr ul{margin:0;padding-left:16px}
+.pr .box{border:1px solid #cfd8de;border-radius:8px;padding:8px 10px;min-height:70px;white-space:pre-wrap;break-inside:avoid;text-align:justify;hyphens:auto;overflow-wrap:anywhere}
+.pr h2{break-after:avoid}
+.pr .rs{border-left:4px solid var(--c,#cfd8de);padding:3px 0 3px 12px;margin-top:9px;break-inside:avoid}
+.pr .rs:first-of-type{margin-top:6px}
+.pr .rs .rh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pr .rs .rh span{color:#586875;font-size:10px;font-weight:600}
+.pr .rs .rc{display:grid;grid-template-columns:1fr 1fr;gap:3px 18px;margin-top:3px}
+.pr .rs .rc small{font-size:9.5px;font-weight:700;color:#586875}
+.pr .rs p{margin:1px 0 0;white-space:pre-wrap;text-align:justify;hyphens:auto;overflow-wrap:anywhere;text-justify:inter-word}
+.pr .rs p.none{color:#8a97a3;text-align:left}
+.pr .cmpp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px;break-inside:avoid}
+.pr .cmpp div{border:1px solid #cfd8de;border-radius:8px;padding:6px 10px}
+.pr .cmpp small{display:block}
+.pr .up{color:#127a43;font-weight:700}.pr .down{color:#b3261e;font-weight:700}.pr .eq{color:#586875;font-weight:600}
+.pr td.d{width:78px;text-align:right;white-space:nowrap}
+.pr .sub3{margin:10px 0 3px}
+.pr .sig{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:30px;break-inside:avoid}
+.pr .sig div{border-top:1px solid #14202b;padding-top:4px;text-align:center}
+.pr .ft{margin-top:14px;font-size:9.5px;color:#586875}
+.pr .keep{break-inside:avoid}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="printarea"></div>
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script>
+/* Ficha de desempeño: versión preliminar de una sola pantalla.
+   Datos: borrador y historial en este navegador (localStorage); opcional, envío a Google Sheets por Apps Script. */
+const LV=[0,25,50,75,100],LN=['Sin evidencia','Inicial','En desarrollo','Consolidado','Referente'];
+const COL=['#ec6a63','#f4a259','#f2cf55','#9bd08a','#37a36a'];
+const CATS=[{n:'Insuficiente',bg:'#fde8e6',fg:'#b3261e'},{n:'En desarrollo',bg:'#fff0dd',fg:'#a85a0a'},{n:'Cumple',bg:'#e7f4e1',fg:'#3b7a2a'},{n:'Destacado',bg:'#d9f1e4',fg:'#127a43'},{n:'Sobresaliente',bg:'#d3f0ee',fg:'#0b6b66'}];
+const CARGOS=['Ayudante de laboratorio','Asistente técnico','Ingeniero de desarrollo','Químico','Subgerente técnico','Gerente técnico'];
+const TEAM=['Alexis Gómez','Katherine Rojas','Jenniffer Larenas','Francisco Contreras','Danitza Espinoza'];
+const KEYS={draft:'ficha_rapida_borrador_v1',hist:'ficha_rapida_historial_v1',conn:'ficha_rapida_conexion_v1',tpl:'ficha_rapida_atributos_v1'};
+const BLOCKA=70;
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const band=v=>v==null?null:Math.round(v/25);
+const colorOf=v=>v==null?'transparent':COL[clamp(Math.round(v/12.5/2),0,4)];
+const lvlTxt=v=>v==null?'Sin evaluar':LN[clamp(Math.round(v/25),0,4)];
+const catIdx=g=>g==null?null:g<40?0:g<60?1:g<80?2:g<90?3:4;
+const pct=v=>v==null?'-':Math.round(v)+'%';
+const fd=iso=>{const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(iso||'');return m?m[3]+'-'+m[2]+'-'+m[1]:'-'};
+const todayISO=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const rid=()=>'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const ls={get(k,d){try{const s=localStorage.getItem(k);return s?JSON.parse(s):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+
+const ATTRS=()=>[
+ {id:'tec',n:'Desempeño técnico',b:'A',w:20},{id:'obj',n:'Cumplimiento de objetivos y metas',b:'A',w:20},{id:'cal',n:'Calidad del trabajo',b:'A',w:15},{id:'aut',n:'Autonomía resolutiva',b:'A',w:10,h:'Resolver dentro de su ámbito sin depender de la jefatura'},
+ {id:'cam',n:'Apertura al cambio',b:'A',w:10,h:'Acoger la retroalimentación y usarla para mejorar'},
+ {id:'equ',n:'Trabajo en equipo',b:'A',w:10,h:'Trabajar con otros, alineamiento con el equipo y actitud positiva'},
+ {id:'prob',n:'Solución de problemas',b:'A',w:10,h:'Analizar el problema, evaluar alternativas y decidir'},
+ {id:'flex',n:'Flexibilidad',b:'A',w:5,h:'Adaptarse a cambios de prioridades, tareas y forma de trabajo'},
+ {id:'unc',n:'Cumplimiento Uncountable',b:'B',w:12.5},{id:'s5',n:'Cumplimiento 5S',b:'B',w:12.5},{id:'eime',n:'Cumplimiento EIME',b:'B',w:12.5,h:'Calibración de equipos del laboratorio'},{id:'eq',n:'Conocimiento del trabajo del equipo',b:'B',w:12.5},{id:'hor',n:'Cumplimiento de horario',b:'B',w:12.5},{id:'par',n:'Reconocimiento de pares',b:'B',w:12.5},{id:'seg',n:'Normas y seguridad',b:'B',w:12.5},{id:'apo',n:'Apoyo en gestiones internas',b:'B',w:12.5}];
+const SUG=[
+ {n:'Comunicación',h:'Comunicarse con claridad, oportunidad y respeto',b:'A'},
+ {n:'Proactividad',h:'Proponer mejoras y anticiparse sin que se lo pidan',b:'A'},
+ {n:'Compromiso',h:'Disposición a contribuir más allá de lo mínimo',b:'A'},
+ {n:'Organización',h:'Planificar y ordenar el trabajo propio',b:'A'},
+ {n:'Productividad',h:'Volumen de trabajo logrado en el tiempo disponible',b:'A'},
+ {n:'Prudencia y previsión',h:'Anticipar el impacto del trabajo propio en otros',b:'A'},
+ {n:'Generosidad',h:'Compartir conocimiento, enseñar y aprender de otros',b:'B'},
+ {n:'Responsabilidad con equipos y materiales',h:'Cuidado y orden de equipos e instalaciones',b:'B'},
+ {n:'Manejo de críticas y tolerancia',h:'Recibir críticas y manejar conflictos con calma',b:'B'},
+ {n:'Orientación al cliente interno',h:'Atender a quien solicita ensayos o desarrollos',b:'B'}];
+const tplAttrs=()=>{const t=ls.get(KEYS.tpl,null);return t&&t.length?JSON.parse(JSON.stringify(t)):ATTRS()};
+function defPeriod(){const d=new Date();let q=Math.floor(d.getMonth()/3),y=d.getFullYear();q--;if(q<0){q=3;y--}return{q:'Q'+(q+1),y}}
+function fresh(){const p=defPeriod();return{id:rid(),persona:'',cargo:2,q:p.q,y:p.y,evaluador:'',fecha:todayISO(),attrs:tplAttrs(),scores:{},fort:[],opp:[],metasOn:false,metas:[],com:{},comJ:'',comT:'',savedAt:null}}
+let S=Object.assign(fresh(),ls.get(KEYS.draft,{}));
+if(!S.attrs||!S.attrs.length)S.attrs=tplAttrs();
+if(!S.com||typeof S.com!=='object')S.com={};
+let ui={adding:null,dirty:false,drag:null,dlg:null,cm:{},prev:null,cands:[],cmpId:null};
+let conn=ls.get(KEYS.conn,{url:'',key:''});
+
+/* ---------- cálculo ---------- */
+function blockScore(b){let sw=0,s=0;S.attrs.filter(a=>a.b===b).forEach(a=>{const v=S.scores[a.id];if(v!=null){sw+=a.w;s+=a.w*v}});return sw?s/sw:null}
+function total(){const A=blockScore('A'),B=blockScore('B');if(A!=null&&B!=null)return BLOCKA/100*A+(1-BLOCKA/100)*B;return A!=null?A:B}
+const catOf=g=>g==null?{n:'Sin datos',bg:'#edf0f3',fg:'#586875'}:CATS[catIdx(g)];
+const periodTxt=()=>S.q+' '+S.y;
+function suggest(){
+  const ev=S.attrs.filter(a=>S.scores[a.id]!=null);
+  S.fort=ev.filter(a=>S.scores[a.id]>=75).sort((x,y)=>S.scores[y.id]-S.scores[x.id]).slice(0,3).map(a=>a.n);
+  S.opp=ev.filter(a=>S.scores[a.id]<=50).sort((x,y)=>S.scores[x.id]-S.scores[y.id]).slice(0,3).map(a=>a.n);
+}
+
+/* ---------- comparación con la ficha anterior ---------- */
+const CMP_T=5;
+const pKey=r=>(+r.y||0)*4+(+String(r.q).slice(1)||0);
+const nrm=x=>String(x||'').trim().toLowerCase();
+function refreshPrev(){
+  const n=nrm(S.persona),k=pKey(S);
+  ui.cands=n?histGet().filter(r=>r.id!==S.id&&nrm(r.persona)===n&&pKey(r)<k).sort((a,b)=>pKey(b)-pKey(a)||String(b.savedAt).localeCompare(String(a.savedAt))):[];
+  ui.prev=ui.cands.find(r=>r.id===ui.cmpId)||ui.cands[0]||null;
+}
+const prevAttr=name=>{const r=ui.prev;if(!r)return null;const a=(r.attrs||[]).find(z=>nrm(z.n)===nrm(name));const v=a&&r.scores?r.scores[a.id]:null;return v==null?null:v};
+const dOf=(now,before)=>now==null||before==null?null:now-before;
+const sgn=d=>(d>0?'+':'')+Math.round(d*10)/10;
+function chip(d,full){
+  if(d==null)return '';
+  if(d>=CMP_T)return `<span class="dl up">▲ ${sgn(d)}%</span>`;
+  if(d<=-CMP_T)return `<span class="dl down">▼ ${sgn(d)}%</span>`;
+  return `<span class="dl eq">${full?'Sin cambio relevante':'='}</span>`;
+}
+function cmpHTML(){
+  const r=ui.prev,h='Comparación con la evaluación anterior';
+  if(!S.persona.trim())return `<h2>${h}</h2><div class="empty">Escribe la persona evaluada para ver cómo cambió respecto al periodo anterior.</div>`;
+  if(!r)return `<h2>${h}</h2><div class="empty">No hay una ficha guardada anterior de ${esc(S.persona)}. Al guardar esta, quedará como punto de partida para el próximo Q.</div>`;
+  const per=esc(r.q+' '+r.y),g=total(),a=blockScore('A'),b=blockScore('B');
+  const dT=dOf(g,r.puntaje),dA=dOf(a,r.bloqueA),dB=dOf(b,r.bloqueB);
+  const st=(t,now,bef,d)=>`<div class="cs"><small>${t}</small><div class="n">${pct(now)}<s>antes ${bef==null?'-':Math.round(bef)+'%'}</s></div>${chip(d,true)}</div>`;
+  const verd=dT==null?'Faltan puntajes para comparar.':dT>=CMP_T?`Mejoró ${Math.round(dT)}% respecto a ${per}.`:dT<=-CMP_T?`Bajó ${Math.round(-dT)}% respecto a ${per}.`:`Se mantiene respecto a ${per} (cambio menor a ${CMP_T}%).`;
+  const rows=S.attrs.map(x=>{const v=S.scores[x.id],pv=prevAttr(x.n);return `<div class="cr"><span>${esc(x.n)}</span><span class="pv">${pv==null?'-':pv+'%'} → ${v==null?'-':v+'%'}</span>${chip(dOf(v,pv))||'<span></span>'}</div>`}).join('');
+  const sel=ui.cands.length>1?`<select data-cmp aria-label="Comparar con">${ui.cands.map(c=>`<option value="${c.id}"${c.id===r.id?' selected':''}>${esc(c.q+' '+c.y)}, guardada ${fd(c.savedAt)}</option>`).join('')}</select>`:'';
+  return `<div class="ch"><h2>Comparación con ${per}</h2>${sel}</div><p class="verd">${verd}</p>
+  <div class="cmpg">${st('Resultado global',g,r.puntaje,dT)}${st('Bloque A ('+BLOCKA+'%)',a,r.bloqueA,dA)}${st('Bloque B ('+(100-BLOCKA)+'%)',b,r.bloqueB,dB)}</div>
+  <div class="cl">${rows}</div><small style="display:block;margin-top:10px">Cambios de ${CMP_T}% o más se marcan como mejora (▲) o baja (▼).</small>`;
+}
+function paintCmp(){const e=document.getElementById('cmp');if(e)e.innerHTML=cmpHTML()}
+
+/* ---------- vistas ---------- */
+const mark=()=>`<span class="mark" aria-hidden="true">${COL.map((c,k)=>`<b style="background:${c};height:${10+k*4}px"></b>`).join('')}</span>`;
+const icon=n=>`<i class="ph ph-${n} i" aria-hidden="true"></i>`;
+function bandHTML(key,v,label,ro){
+  const vv=v==null?null:clamp(v,0,100);
+  return `<div class="band" role="slider" tabindex="0" data-key="${key}" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${vv==null?0:vv}" aria-valuetext="${vv==null?'Sin evaluar':vv+'%, '+lvlTxt(vv)}"${ro?' data-ro="1"':''}><div class="fill" style="clip-path:inset(0 ${vv==null?100:100-vv}% 0 0);background:${colorOf(vv)}"></div><i class="st" style="left:25%"></i><i class="st" style="left:50%"></i><i class="st" style="left:75%"></i></div>`;
+}
+const vlHTML=(key,v)=>`<div class="vl" data-vl="${key}"><b>${v==null?'-':v+'%'}</b><small>${lvlTxt(v)}</small></div>`;
+const cmOf=id=>S.com[id]||{j:'',t:''};
+const hasCm=id=>{const c=S.com[id];return !!(c&&((c.j||'').trim()||(c.t||'').trim()))};
+function rowsHTML(b){
+  const list=S.attrs.filter(a=>a.b===b);
+  return list.map(a=>{const c=cmOf(a.id),op=!!ui.cm[a.id];
+   return `<div class="arw"><div class="arow"><div class="nm"><button class="nb${hasCm(a.id)?' has':''}" data-act="cm" data-id="${a.id}" aria-expanded="${op}" aria-controls="cm_${a.id}" title="Comentarios de este atributo"><span${a.h?` title="${esc(a.h)}"`:''}>${esc(a.n)}</span>${icon('chat-circle-text').replace('class="ph','class="ph ci')}</button><small>Peso ${+a.w.toFixed(1)}%</small></div>${bandHTML('a:'+a.id,S.scores[a.id],a.n)}${vlHTML('a:'+a.id,S.scores[a.id])}<button class="rm" data-act="delAttr" data-id="${a.id}" aria-label="Quitar ${esc(a.n)}">${icon('x')}</button></div>
+   <div class="reveal cm${op?' open':''}" id="cm_${a.id}"><div>${a.h?`<small class="ah">${esc(a.h)}</small>`:''}<div class="cmg"><div class="f"><label for="cj_${a.id}">Comentario de la jefatura</label><textarea id="cj_${a.id}" data-c="j" data-id="${a.id}" placeholder="Qué se observó y con qué evidencia">${esc(c.j)}</textarea></div><div class="f"><label for="ct_${a.id}">Comentario del trabajador</label><textarea id="ct_${a.id}" data-c="t" data-id="${a.id}" placeholder="Cómo lo ve la persona evaluada">${esc(c.t)}</textarea></div></div></div></div></div>`}).join('')
+   +(ui.adding===b?`<div class="add"><input type="text" id="newAttr" placeholder="Nombre del atributo" aria-label="Nombre del atributo"><button class="btn pri sm" data-act="saveAttr" data-b="${b}">Agregar</button><button class="btn sm" data-act="cancelAdd">Cancelar</button>${sugHTML(b)}</div>`:'');
+}
+function sugHTML(b){
+  const have=new Set(S.attrs.map(a=>a.n.toLowerCase())),l=SUG.map((x,i)=>({x,i})).filter(o=>!have.has(o.x.n.toLowerCase()));
+  return l.length?`<div class="chips" role="group" aria-label="Atributos sugeridos">${l.map(o=>`<button class="chip" data-act="addSug" data-i="${o.i}" data-b="${b}" title="${esc(o.x.h)}">${esc(o.x.n)}</button>`).join('')}</div>`:'';
+}
+function resumenItems(){return S.attrs.filter(a=>hasCm(a.id))}
+function resumenHTML(){
+  const it=resumenItems();
+  if(!it.length)return '<div class="empty">Los comentarios que escribas en cada atributo aparecerán aquí automáticamente.</div>';
+  return it.map(a=>{const c=cmOf(a.id),v=S.scores[a.id],j=(c.j||'').trim(),t=(c.t||'').trim();
+   return `<div class="rs" style="--c:${v==null?'var(--line)':colorOf(v)}"><div class="rh"><b>${esc(a.n)}</b><small>${v==null?'Sin evaluar':lvlTxt(v)+' ('+v+'%)'}</small></div><div class="rc"><div><small>Jefatura</small>${j?`<p>${esc(j)}</p>`:'<p class="none">Sin comentario</p>'}</div><div><small>Trabajador</small>${t?`<p>${esc(t)}</p>`:'<p class="none">Sin comentario</p>'}</div></div></div>`}).join('');
+}
+function listHTML(k,arr,ph){
+  return (arr.length?arr.map((t,i)=>`<div class="item"><input type="text" data-list="${k}" data-i="${i}" value="${esc(t)}" aria-label="${k==='fort'?'Fortaleza':'Oportunidad'} ${i+1}"><button class="rm" data-act="delItem" data-k="${k}" data-i="${i}" aria-label="Quitar">${icon('x')}</button></div>`).join(''):`<div class="empty">${ph}</div>`)
+   +`<div class="item"><input type="text" data-new="${k}" placeholder="Agregar y presionar Enter" aria-label="Agregar ${k==='fort'?'fortaleza':'oportunidad'}"></div>`;
+}
+function goalsHTML(){
+  return S.metas.map((m,i)=>`<div class="gcard"><div class="gg">
+   <div class="f"><label>Atributo</label><select data-g="${i}" data-gf="attr">${S.attrs.map(a=>`<option value="${a.id}"${m.attr===a.id?' selected':''}>${esc(a.n)} (${pct(S.scores[a.id])})</option>`).join('')}</select></div>
+   <div class="f"><label>Nivel que se busca</label><select data-g="${i}" data-gf="target">${[25,50,75,100].map(l=>`<option value="${l}"${m.target===l?' selected':''}>${l}% ${LN[l/25]}</option>`).join('')}</select></div>
+   <div class="f"><label>Fecha límite</label><input type="date" data-g="${i}" data-gf="date" value="${esc(m.date)}"></div></div>
+   <div class="f"><label>Acciones acordadas</label><input type="text" data-g="${i}" data-gf="actions" value="${esc(m.actions)}" placeholder="Qué se hará, quién apoya y cada cuánto se revisa"></div>
+   <div class="gav"><div><span class="lab">Avance</span>${bandHTML('g:'+i,m.pct,'Avance de la meta '+(i+1))}</div>${vlHTML('g:'+i,m.pct)}<button class="rm" data-act="delGoal" data-i="${i}" aria-label="Quitar meta" style="opacity:1">${icon('x')}</button></div></div>`).join('')
+   +`<div style="margin-top:12px"><button class="btn" data-act="addGoal">${icon('plus')}Agregar meta</button></div>`;
+}
+function resultHTML(){
+  const g=total(),c=catOf(g),bi=catIdx(g);
+  return `<div class="score"><div class="big" data-t="total">${pct(g)}</div><div><span class="badge" data-t="badge" style="background:${c.bg};color:${c.fg}">${c.n}</span><br><span class="tones" data-t="tones">${COL.map((x,i)=>`<span class="tone${bi===i?' on':''}" style="background:${x}"></span>`).join('')}</span></div></div>
+  <div class="two"><div class="sub"><small>Bloque A (${BLOCKA}%)</small><h3 data-t="A">${pct(blockScore('A'))}</h3></div><div class="sub"><small>Bloque B (${100-BLOCKA}%)</small><h3 data-t="B">${pct(blockScore('B'))}</h3></div></div>`;
+}
+function statusTxt(){return ui.dirty?'Cambios sin guardar en el historial':S.savedAt?'Guardada el '+fd(S.savedAt)+' '+new Date(S.savedAt).toTimeString().slice(0,5):'Borrador nuevo'}
+function appHTML(){
+  const periods=['Q1','Q2','Q3','Q4'];
+  return `<div class="wrap">
+  <header class="top"><div class="brand">${mark()}<div><h1>Ficha de desempeño</h1><div class="status" id="status">${statusTxt()}</div></div></div>
+  <div class="acts"><button class="btn" data-act="nueva">${icon('file-plus')}<span class="tx">Nueva</span></button><button class="btn" data-act="hist">${icon('clock-counter-clockwise')}<span class="tx">Historial</span></button><button class="btn" data-act="conn">${icon('plugs-connected')}<span class="tx">${conn.url?'Sheets conectado':'Conectar Sheets'}</span></button><button class="btn" data-act="print">${icon('printer')}<span class="tx">Imprimir</span></button><button class="btn pri" data-act="save">${icon('floppy-disk')}<span class="tx">Guardar</span></button></div></header>
+  <section class="panel"><div class="fields">
+   <div class="f"><label for="f_persona">Persona evaluada</label><input type="text" id="f_persona" list="team" data-f="persona" value="${esc(S.persona)}" autocomplete="off"><datalist id="team">${TEAM.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></div>
+   <div class="f"><label for="f_cargo">Cargo</label><select id="f_cargo" data-f="cargo">${CARGOS.map((c,i)=>`<option value="${i}"${S.cargo===i?' selected':''}>${c}</option>`).join('')}</select></div>
+   <div class="f"><label for="f_ev">Evaluador</label><input type="text" id="f_ev" data-f="evaluador" value="${esc(S.evaluador)}" autocomplete="off"></div>
+   <div class="f"><label for="f_q">Periodo</label><div class="pp"><select id="f_q" data-f="q">${periods.map(p=>`<option${S.q===p?' selected':''}>${p}</option>`).join('')}</select><input type="number" data-f="y" value="${S.y}" min="2020" max="2100" aria-label="Año"></div></div>
+   <div class="f"><label for="f_fecha">Fecha</label><input type="date" id="f_fecha" data-f="fecha" value="${esc(S.fecha)}"></div></div></section>
+  <section class="panel" id="cmp" style="margin-top:18px">${cmpHTML()}</section>
+  <div class="main"><section class="panel" id="attrs">
+   <div class="blk"><div class="bh"><h2>Bloque A: desempeño</h2><button class="btn ghost sm" data-act="addAttr" data-b="A">${icon('plus')}Atributo</button></div>${rowsHTML('A')}</div>
+   <div class="blk"><div class="bh"><h2>Bloque B: cumplimiento y cultura</h2><button class="btn ghost sm" data-act="addAttr" data-b="B">${icon('plus')}Atributo</button></div>${rowsHTML('B')}</div>
+   <p class="hint" style="margin-top:14px">Toca o arrastra la banda para fijar el nivel. Con teclado: flechas. Doble toque para dejar sin evaluar. Toca el nombre de un atributo para escribir comentarios.</p>
+   <div class="tools"><button class="btn sm" data-act="saveTpl">${icon('bookmark-simple')}Usar estos atributos en las próximas fichas</button><button class="btn sm ghost" data-act="resetTpl">Volver a los atributos originales</button></div></section>
+  <aside class="side"><section class="panel" id="result">${resultHTML()}</section>
+   <section class="panel"><div class="bh"><h2>Fortalezas</h2><button class="link" data-act="suggest">Sugerir desde puntajes</button></div><div id="lfort">${listHTML('fort',S.fort,'Escribe una fortaleza o usa la sugerencia.')}</div></section>
+   <section class="panel"><h2 style="margin-bottom:4px">Oportunidades de mejora</h2><div id="lopp">${listHTML('opp',S.opp,'Escribe una oportunidad o usa la sugerencia.')}</div></section></aside></div>
+  <section class="panel" style="margin-top:20px"><button class="sw" role="switch" aria-checked="${S.metasOn}" data-act="metasToggle"><span class="tr"></span><span><h2>Metas activas</h2><small>${S.metasOn?'Incluidas en la ficha y en la impresión.':'Actívalas para registrar metas de mejora con fecha y avance.'}</small></span></button>
+   <div class="reveal${S.metasOn?' open':''}" id="metas"><div>${S.metasOn?goalsHTML():''}</div></div></section>
+  <section class="panel" style="margin-top:20px"><h2>Conversación con la jefatura</h2><small>Retroalimentación acordada en la reunión.</small>
+   <h3 class="sub2">Resumen por atributos</h3><small>Se arma solo con los comentarios que escribas en cada atributo.</small>
+   <div id="resumen">${resumenHTML()}</div>
+   <h3 class="sub2">Conversación general</h3>
+   <div class="cols2" style="margin-top:8px"><div class="f"><label for="f_cj">Comentario de la jefatura</label><textarea id="f_cj" data-f="comJ">${esc(S.comJ)}</textarea></div><div class="f"><label for="f_ct">Comentario del trabajador</label><textarea id="f_ct" data-f="comT">${esc(S.comT)}</textarea></div></div></section>
+  </div>`;
+}
+const root=document.getElementById('app');
+function render(){refreshPrev();root.innerHTML=appHTML()}
+
+/* ---------- actualización en vivo (sin redibujar) ---------- */
+function setBandUI(key,v){
+  const b=root.querySelector('.band[data-key="'+key+'"]');if(!b)return;
+  const f=b.querySelector('.fill');f.style.clipPath='inset(0 '+(v==null?100:100-v)+'% 0 0)';f.style.background=colorOf(v);
+  b.setAttribute('aria-valuenow',v==null?0:v);b.setAttribute('aria-valuetext',v==null?'Sin evaluar':v+'%, '+lvlTxt(v));
+  const l=root.querySelector('[data-vl="'+key+'"]');if(l)l.innerHTML='<b>'+(v==null?'-':v+'%')+'</b><small>'+lvlTxt(v)+'</small>';
+}
+function paintResult(){
+  const g=total(),c=catOf(g),bi=catIdx(g),q=s=>root.querySelector('[data-t="'+s+'"]');
+  q('total').textContent=pct(g);const b=q('badge');b.textContent=c.n;b.style.background=c.bg;b.style.color=c.fg;
+  q('A').textContent=pct(blockScore('A'));q('B').textContent=pct(blockScore('B'));
+  q('tones').querySelectorAll('.tone').forEach((t,i)=>t.classList.toggle('on',bi===i));
+}
+function setValue(key,v){
+  const [t,id]=key.split(':');
+  if(t==='a')S.scores[id]=v;else S.metas[+id].pct=v;
+  setBandUI(key,v);if(t==='a'){paintResult();paintCmp()}
+}
+function touch(){ui.dirty=true;clearTimeout(touch.h);touch.h=setTimeout(()=>{ls.set(KEYS.draft,S)},350);const s=document.getElementById('status');if(s)s.textContent=statusTxt()}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2800)}
+
+/* ---------- banda editable ---------- */
+function valFromX(b,x){const r=b.getBoundingClientRect();return clamp(Math.round((x-r.left)/r.width*4),0,4)*25}
+root.addEventListener('pointerdown',e=>{
+  const b=e.target.closest('.band');if(!b||b.dataset.ro)return;
+  ui.drag=b;b.classList.add('drag');try{b.setPointerCapture(e.pointerId)}catch(_){}
+  setValue(b.dataset.key,valFromX(b,e.clientX));touch();
+});
+root.addEventListener('pointermove',e=>{if(ui.drag){setValue(ui.drag.dataset.key,valFromX(ui.drag,e.clientX));touch()}});
+const endDrag=()=>{if(ui.drag){ui.drag.classList.remove('drag');ui.drag=null}};
+root.addEventListener('pointerup',endDrag);root.addEventListener('pointercancel',endDrag);
+root.addEventListener('dblclick',e=>{const b=e.target.closest('.band');if(b&&!b.dataset.ro){setValue(b.dataset.key,null);touch()}});
+root.addEventListener('keydown',e=>{
+  const b=e.target.closest&&e.target.closest('.band');
+  if(b){
+    const key=b.dataset.key,[t,id]=key.split(':'),cur=t==='a'?S.scores[id]:S.metas[+id].pct;let v=cur;
+    if(e.key==='ArrowRight'||e.key==='ArrowUp')v=cur==null?0:Math.min(100,cur+25);
+    else if(e.key==='ArrowLeft'||e.key==='ArrowDown')v=cur==null?0:Math.max(0,cur-25);
+    else if(e.key==='Home')v=0;else if(e.key==='End')v=100;
+    else if(e.key==='Delete'||e.key==='Backspace')v=null;else return;
+    e.preventDefault();setValue(key,v);touch();return;
+  }
+  if(e.key==='Enter'&&e.target.dataset){
+    if(e.target.dataset.new){const k=e.target.dataset.new,v=e.target.value.trim();if(v){S[k].push(v);touch();refreshList(k)}}
+    else if(e.target.id==='newAttr')A.saveAttr({b:ui.adding});
+  }
+});
+
+/* ---------- campos ---------- */
+root.addEventListener('input',e=>{
+  const el=e.target,d=el.dataset;
+  if(d.cmp!=null){ui.cmpId=el.value;refreshPrev();paintCmp();return}
+  if(d.f){const f=d.f;S[f]=f==='cargo'?+el.value:f==='y'?(+el.value||S.y):el.value;touch();if(f==='persona'||f==='q'||f==='y'){if(f==='persona')ui.cmpId=null;refreshPrev();paintCmp()}return}
+  if(d.c){const c=S.com[d.id]||(S.com[d.id]={j:'',t:''});c[d.c]=el.value;touch();
+    const nb=root.querySelector('.nb[data-id="'+d.id+'"]');if(nb)nb.classList.toggle('has',hasCm(d.id));
+    const r=document.getElementById('resumen');if(r)r.innerHTML=resumenHTML();return}
+  if(d.list){S[d.list][+d.i]=el.value;touch();return}
+  if(d.g!=null){const m=S.metas[+d.g];const f=d.gf;m[f]=f==='target'?+el.value:el.value;touch();return}
+});
+function refreshList(k){const el=document.getElementById(k==='fort'?'lfort':'lopp');el.innerHTML=listHTML(k,S[k],k==='fort'?'Escribe una fortaleza o usa la sugerencia.':'Escribe una oportunidad o usa la sugerencia.');const n=el.querySelector('[data-new]');if(n)n.focus()}
+function refreshMetas(){const m=document.getElementById('metas');m.classList.toggle('open',S.metasOn);m.firstElementChild.innerHTML=S.metasOn?goalsHTML():''}
+
+/* ---------- acciones ---------- */
+const A={
+  addAttr(d){ui.adding=d.b;render();const i=document.getElementById('newAttr');if(i)i.focus()},
+  cancelAdd(){ui.adding=null;render()},
+  addSug(d){
+    const x=SUG[+d.i];if(!x)return;const list=S.attrs.filter(a=>a.b===d.b),w=list.length?+(list.reduce((t,a)=>t+a.w,0)/list.length).toFixed(1):10;
+    S.attrs.push({id:'x'+Date.now().toString(36),n:x.n,h:x.h,b:d.b,w});touch();render();
+  },
+  saveTpl(){ls.set(KEYS.tpl,S.attrs);toast('Listo: cada ficha nueva partirá con estos atributos')},
+  resetTpl(){
+    if(!confirm('¿Volver a la lista original de atributos? Se pierden los atributos que agregaste o quitaste y los puntajes de esta ficha.'))return;
+    try{localStorage.removeItem(KEYS.tpl)}catch(e){}
+    S.attrs=ATTRS();S.scores={};S.com={};S.metas=[];touch();render();toast('Atributos originales restaurados')
+  },
+  cm(d){
+    const op=!ui.cm[d.id];ui.cm[d.id]=op;
+    const p=document.getElementById('cm_'+d.id),b=root.querySelector('.nb[data-id="'+d.id+'"]');
+    if(p)p.classList.toggle('open',op);if(b)b.setAttribute('aria-expanded',op);
+    if(op){const t=document.getElementById('cj_'+d.id);if(t)requestAnimationFrame(()=>t.focus({preventScroll:true}))}
+  },
+  saveAttr(d){
+    const i=document.getElementById('newAttr'),n=i&&i.value.trim();if(!n)return;
+    const list=S.attrs.filter(a=>a.b===d.b),w=list.length?+(list.reduce((s,a)=>s+a.w,0)/list.length).toFixed(1):10;
+    S.attrs.push({id:'x'+Date.now().toString(36),n,b:d.b,w});ui.adding=null;touch();render();
+  },
+  delAttr(d){
+    const a=S.attrs.find(x=>x.id===d.id);if(!a||!confirm('¿Quitar "'+a.n+'" de esta ficha?'))return;
+    S.attrs=S.attrs.filter(x=>x.id!==d.id);delete S.scores[d.id];delete S.com[d.id];S.metas=S.metas.filter(m=>m.attr!==d.id);touch();render();
+  },
+  suggest(){suggest();touch();refreshList('fort');refreshList('opp')},
+  delItem(d){S[d.k].splice(+d.i,1);touch();refreshList(d.k)},
+  metasToggle(){
+    S.metasOn=!S.metasOn;
+    if(S.metasOn&&!S.metas.length)A.addGoal(null,true);
+    touch();render();
+  },
+  addGoal(d,silent){
+    const ev=S.attrs.filter(a=>S.scores[a.id]!=null).sort((x,y)=>S.scores[x.id]-S.scores[y.id])[0]||S.attrs[0];
+    const cur=ev?S.scores[ev.id]:null;
+    S.metas.push({attr:ev?ev.id:'',target:cur==null?50:Math.min(100,cur+25),date:'',actions:'',pct:0});
+    if(!silent){touch();refreshMetas()}
+  },
+  delGoal(d){S.metas.splice(+d.i,1);touch();refreshMetas()},
+  nueva(){if(ui.dirty&&!confirm('Hay cambios sin guardar. ¿Empezar una ficha nueva igualmente?'))return;S=fresh();ui.dirty=false;ls.set(KEYS.draft,S);render();toast('Ficha nueva')},
+  print(){printIt()},
+  save(){saveRecord()},
+  hist(){openHist()},
+  conn(){openConn()},
+  close(){document.getElementById('dlg').close()},
+  openRec(d){const r=histGet().find(x=>x.id===d.id);if(!r)return;if(ui.dirty&&!confirm('Hay cambios sin guardar. ¿Abrir otra ficha igualmente?'))return;S=Object.assign(fresh(),JSON.parse(JSON.stringify(r)));ui.dirty=false;ls.set(KEYS.draft,S);document.getElementById('dlg').close();render();toast('Ficha abierta')},
+  delRec(d){if(!confirm('¿Eliminar esta ficha del historial de este equipo?'))return;ls.set(KEYS.hist,histGet().filter(x=>x.id!==d.id));openHist()},
+  sync(){syncFromSheets()},
+  saveConn(){
+    conn={url:document.getElementById('c_url').value.trim(),key:document.getElementById('c_key').value.trim()};ls.set(KEYS.conn,conn);
+    document.getElementById('dlg').close();render();toast(conn.url?'Conexión guardada':'Conexión quitada');
+  },
+  testConn(){testConn()},
+  exportJson(){const b=new Blob([JSON.stringify(histGet(),null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='fichas-desempeno.json';a.click()}
+};
+root.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el&&A[el.dataset.act])A[el.dataset.act](el.dataset)});
+const dlgEl=document.getElementById('dlg');
+dlgEl.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el&&A[el.dataset.act])A[el.dataset.act](el.dataset);else if(e.target===dlgEl)dlgEl.close()});
+
+/* ---------- guardar, historial y Sheets ---------- */
+const histGet=()=>ls.get(KEYS.hist,[]).sort((a,b)=>String(b.savedAt).localeCompare(String(a.savedAt)));
+function snapshot(){const g=total();return Object.assign({},JSON.parse(JSON.stringify(S)),{savedAt:new Date().toISOString(),puntaje:g==null?null:Math.round(g*10)/10,categoria:catOf(g).n,bloqueA:blockScore('A'),bloqueB:blockScore('B')})}
+async function saveRecord(){
+  if(!S.persona.trim()){toast('Escribe el nombre de la persona evaluada');const i=document.getElementById('f_persona');if(i)i.focus();return}
+  const r=snapshot();S.savedAt=r.savedAt;
+  const h=histGet().filter(x=>x.id!==r.id);h.unshift(r);ls.set(KEYS.hist,h);ls.set(KEYS.draft,S);ui.dirty=false;
+  const s=document.getElementById('status');if(s)s.textContent=statusTxt();
+  if(!conn.url){toast('Guardada en el historial de este equipo');return}
+  toast('Guardada. Enviando a Google Sheets...');
+  try{
+    const res=await fetch(conn.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({key:conn.key,record:r})});
+    const j=await res.json();toast(j.ok?'Guardada en el historial y en Google Sheets':'Guardada localmente. Sheets respondió: '+(j.error||'error'));
+  }catch(err){toast('Guardada localmente. No se pudo enviar a Google Sheets')}
+}
+function openHist(){
+  const h=histGet();
+  dlgEl.innerHTML=`<div class="dlg"><div class="dh"><h2>Historial de fichas</h2><button class="btn ghost sm" data-act="close" aria-label="Cerrar">${icon('x')}</button></div>
+  <small>Guardadas en este navegador${conn.url?' y en tu hoja de Google Sheets':''}. Sirven para comparar la retroalimentación en unos meses.</small>
+  ${h.length?h.map(r=>`<div class="hrow"><div class="t"><b>${esc(r.persona||'Sin nombre')}</b><br><small>${esc(r.q)} ${esc(r.y)}, ${r.puntaje==null?'sin puntaje':Math.round(r.puntaje)+'%, '+esc(r.categoria)}, guardada ${fd(r.savedAt)}</small></div><button class="btn sm" data-act="openRec" data-id="${r.id}">Abrir</button><button class="rm" style="opacity:1" data-act="delRec" data-id="${r.id}" aria-label="Eliminar">${icon('trash')}</button></div>`).join(''):'<div class="empty" style="margin-top:12px">Todavía no hay fichas guardadas.</div>'}
+  <div class="acts" style="margin-top:16px">${conn.url?`<button class="btn" data-act="sync">${icon('arrows-clockwise')}Traer desde Sheets</button>`:''}<button class="btn" data-act="exportJson">${icon('download-simple')}Descargar copia (JSON)</button></div></div>`;
+  if(!dlgEl.open)dlgEl.showModal();
+}
+async function syncFromSheets(){
+  try{
+    const res=await fetch(conn.url+(conn.url.includes('?')?'&':'?')+'action=list&key='+encodeURIComponent(conn.key));const j=await res.json();
+    if(!j.ok){toast('Sheets respondió: '+(j.error||'error'));return}
+    const h=histGet(),ids=new Set(h.map(x=>x.id));let n=0;j.records.forEach(r=>{if(r&&r.id&&!ids.has(r.id)){h.push(r);n++}});ls.set(KEYS.hist,h);refreshPrev();paintCmp();openHist();toast(n?n+' fichas traídas desde Sheets':'Ya estaba todo al día');
+  }catch(e){toast('No se pudo leer Google Sheets')}
+}
+function openConn(){
+  dlgEl.innerHTML=`<div class="dlg"><div class="dh"><h2>Conectar Google Sheets</h2><button class="btn ghost sm" data-act="close" aria-label="Cerrar">${icon('x')}</button></div>
+  <small>Las fichas guardadas se envían a tu hoja. La dirección y la clave quedan solo en este navegador, no en el código de GitHub.</small>
+  <div class="f" style="margin-top:14px"><label for="c_url">Dirección de la aplicación web (Apps Script)</label><input type="text" id="c_url" value="${esc(conn.url)}" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"></div>
+  <div class="f" style="margin-top:12px"><label for="c_key">Clave</label><input type="text" id="c_key" value="${esc(conn.key)}" autocomplete="off"></div>
+  <div class="notice" id="c_msg">Sin conexión no pasa nada: todo se guarda igual en este equipo.</div>
+  <div class="acts" style="margin-top:16px;justify-content:flex-end"><button class="btn" data-act="testConn">Probar</button><button class="btn pri" data-act="saveConn">Guardar</button></div></div>`;
+  if(!dlgEl.open)dlgEl.showModal();
+}
+async function testConn(){
+  const u=document.getElementById('c_url').value.trim(),k=document.getElementById('c_key').value.trim(),m=document.getElementById('c_msg');
+  if(!u){m.textContent='Pega primero la dirección.';return}
+  m.textContent='Probando...';
+  try{const res=await fetch(u+(u.includes('?')?'&':'?')+'action=ping&key='+encodeURIComponent(k));const j=await res.json();m.textContent=j.ok?'Conexión correcta.':'La clave no coincide o el script devolvió un error: '+(j.error||'');}
+  catch(e){m.textContent='No se pudo conectar. Revisa la dirección y que la publicación permita acceso a "Cualquier persona".'}
+}
+
+/* ---------- impresión ---------- */
+const pbar=v=>`<span class="pbar"><i style="width:${v==null?0:v}%;background:${colorOf(v)}"></i></span>`;
+function buildPrint(){
+  const g=total(),c=catOf(g),bi=catIdx(g),a=blockScore('A'),b=blockScore('B');
+  const pv=ui.prev,pc=(d,full)=>d==null?'':d>=CMP_T?`<span class="up">▲ ${sgn(d)}%</span>`:d<=-CMP_T?`<span class="down">▼ ${sgn(d)}%</span>`:`<span class="eq">${full?'Sin cambio relevante':'='}</span>`;
+  const tbl=bl=>`<table>${S.attrs.filter(x=>x.b===bl).map(x=>{const v=S.scores[x.id];return `<tr><td>${esc(x.n)}</td><td class="w">${+x.w.toFixed(1)}%</td><td class="b">${pbar(v)}</td><td class="v">${v==null?'-':v+'%'}</td>${pv?`<td class="d">${pc(dOf(v,prevAttr(x.n)))}</td>`:''}</tr>`}).join('')}</table>`;
+  const cbox=pv?(()=>{const bx=(t,now,bef)=>`<div><small>${t}</small><b>${pct(now)}</b> <span style="color:#586875">antes ${bef==null?'-':Math.round(bef)+'%'}</span><br>${pc(dOf(now,bef),true)}</div>`;return `<h2>Comparación con ${esc(pv.q+' '+pv.y)}</h2><div class="cmpp">${bx('Resultado global',g,pv.puntaje)}${bx('Bloque A',a,pv.bloqueA)}${bx('Bloque B',b,pv.bloqueB)}</div><div style="color:#586875;font-size:9.5px;margin-top:4px">Cambios de ${CMP_T}% o más se marcan como mejora o baja. La última columna de cada bloque compara cada atributo con ${esc(pv.q+' '+pv.y)}.</div>`})():'';
+  const rsum=resumenItems().map(x=>{const c=cmOf(x.id),v=S.scores[x.id],j=(c.j||'').trim(),t=(c.t||'').trim();
+    return `<div class="rs" style="--c:${v==null?'#cfd8de':colorOf(v)}"><div class="rh"><b>${esc(x.n)}</b><span>${v==null?'Sin evaluar':lvlTxt(v)+' ('+v+'%)'}</span></div><div class="rc"><div><small>Jefatura</small>${j?`<p>${esc(j)}</p>`:'<p class="none">Sin comentario</p>'}</div><div><small>Trabajador</small>${t?`<p>${esc(t)}</p>`:'<p class="none">Sin comentario</p>'}</div></div></div>`}).join('');
+  const ul=arr=>arr.length?'<ul>'+arr.map(t=>`<li>${esc(t)}</li>`).join('')+'</ul>':'<div style="color:#586875">Sin registros.</div>';
+  const metas=S.metasOn&&S.metas.length?`<h2>Metas activas</h2><table>${S.metas.map(m=>{const at=S.attrs.find(x=>x.id===m.attr);return `<tr><td><b>${esc(at?at.n:'-')}</b><br><span style="color:#586875">${esc(m.actions||'Sin acciones registradas')}</span></td><td style="width:90px">Meta ${m.target}%<br><span style="color:#586875">${m.date?'hasta '+fd(m.date):'sin fecha'}</span></td><td class="b" style="width:26%">${pbar(m.pct)}</td><td class="v">${m.pct==null?'-':m.pct+'%'}</td></tr>`}).join('')}</table>`:'';
+  return `<div class="pr"><div class="ph"><div><span class="pm">${COL.map((x,k)=>`<b style="background:${x};height:${8+k*3}px"></b>`).join('')}</span><h1>Ficha de desempeño</h1></div><div style="text-align:right"><b style="font-size:14px">${esc(periodTxt())}</b><br><span style="color:#586875">Emitida el ${fd(todayISO())}</span></div></div>
+  <div class="pg"><div><small>Persona evaluada</small><b>${esc(S.persona||'-')}</b></div><div><small>Cargo</small><b>${esc(CARGOS[S.cargo])}</b></div><div><small>Evaluador</small><b>${esc(S.evaluador||'-')}</b></div><div><small>Fecha de evaluación</small><b>${fd(S.fecha)}</b></div></div>
+  <div class="res"><div class="n">${pct(g)}</div><div><span class="bd" style="background:${c.bg};color:${c.fg}">${c.n}</span><div style="margin-top:6px;color:#586875">Bloque A desempeño ${BLOCKA}%: <b style="color:#14202b">${pct(a)}</b><br>Bloque B cultura ${100-BLOCKA}%: <b style="color:#14202b">${pct(b)}</b></div></div>
+  <div style="margin-left:auto;display:flex;gap:3px;align-items:flex-end">${COL.map((x,i)=>`<span style="width:18px;height:${bi===i?16:9}px;border-radius:3px;background:${x};opacity:${bi===i?1:.35}"></span>`).join('')}</div></div>
+  ${cbox}<h2>Bloque A: desempeño</h2>${tbl('A')}<h2>Bloque B: cumplimiento y cultura</h2>${tbl('B')}
+  <div class="c2"><div><h2>Fortalezas</h2>${ul(S.fort)}</div><div><h2>Oportunidades de mejora</h2>${ul(S.opp)}</div></div>
+  ${metas}
+  <h2>Conversación con la jefatura</h2>
+  ${rsum?`<div class="sub3"><b>Resumen por atributos</b></div>${rsum}`:''}
+  <div class="keep"><div class="sub3" style="margin-top:12px"><b>Conversación general</b></div><div class="c2"><div><b>Comentario de la jefatura</b><div class="box">${esc(S.comJ)}</div></div><div><b>Comentario del trabajador</b><div class="box">${esc(S.comT)}</div></div></div></div>
+  <div class="sig"><div>${esc(S.evaluador||'Jefatura')}<br><span style="color:#586875">Jefatura</span></div><div>${esc(S.persona||'Trabajador')}<br><span style="color:#586875">Trabajador</span></div></div>
+  <div class="ft">Escala: 0% sin evidencia, 25% inicial, 50% en desarrollo, 75% consolidado, 100% referente. Ficha ${esc(S.id)}.</div></div>`;
+}
+function printIt(){
+  document.getElementById('printarea').innerHTML=buildPrint();
+  document.body.classList.add('printing');
+  window.onafterprint=()=>document.body.classList.remove('printing');
+  window.print();
+}
+render();
+</script>
+</body>
+</html>
